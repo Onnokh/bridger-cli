@@ -180,13 +180,23 @@ export function linkPackage(packagePath: string): LinkResults {
     throw new Error(`Failed to link package globally: ${errorMessage}`);
   }
 
-  // Step 2: Run npm link <package-name> in current directory (links it locally)
+  // Step 2: Get all existing linked packages + the new one, then link them all together
   try {
     console.log(`Installing "${packageName}" in current project...`);
-    execSync(`npm link ${packageName}`, {
+    
+    // Get all currently linked packages (excluding the one we're about to link)
+    const existingLinks = findLocalLinked().map(pkg => pkg.name);
+    
+    // Combine existing links with the new package name
+    const allPackagesToLink = [...existingLinks, packageName];
+    
+    // Run npm link with all packages at once
+    // This preserves existing symlinks while adding the new one
+    execSync(`npm link ${allPackagesToLink.join(' ')}`, {
       stdio: 'inherit',
       cwd: cwd(),
     });
+    
     results.installed = true;
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';

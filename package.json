@@ -1,0 +1,73 @@
+{
+  "name": "bridged",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Detect locally and globally linked npm packages",
+  "main": "dist/cli.js",
+  "bin": {
+    "bridged": "dist/cli.js"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "tsx watch src/cli.ts",
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "postbuild": "chmod +x dist/cli.js",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
+    "biome:lint": "biome lint .",
+    "biome:check": "biome check .",
+    "biome:format": "biome format . --write",
+    "biome:fix": "biome check . --write",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build",
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags"
+  },
+  "keywords": [
+    "npm",
+    "linked",
+    "packages",
+    "symlink",
+    "cli"
+  ],
+  "author": "Onno Klein Hofmeijer",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Onnokh/bookr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Onnokh/bookr/issues"
+  },
+  "homepage": "https://github.com/Onnokh/bookr#readme",
+  "dependencies": {
+    "meow": "^13.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "@types/node": "^20.10.5",
+    "@vitest/coverage-v8": "^1.2.1",
+    "@vitest/ui": "^1.2.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.6.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "imports": {
+    "@/*": "./src/*"
+  }
+}

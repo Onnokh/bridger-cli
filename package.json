@@ -1,6 +1,6 @@
 {
   "name": "bridged",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "Detect locally and globally linked npm packages",
   "main": "dist/cli.js",
